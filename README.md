@@ -7,6 +7,11 @@ This script creates configuration files used/read by processes/components runnin
   - Jicofo (FOCUS)
   - Videobridge
 
+## Running the script
+```sh
+# python create_rtc_config_files.py  config.ini 
+```
+
 ##TBD
 Configuration files for the following processes/components that run on the RTC server is yet to
 be done
