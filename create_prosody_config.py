@@ -12,34 +12,43 @@
 
 import sys, os
 
-def create_prosody_config(prosody_section):
+def create_prosody_config(prosody_section, nginx_section):
 	
 	print "config file path is %s" %prosody_section['config_file_path']
 	component_cfg_lua_file = open(os.path.join(prosody_section['config_file_path'], "component.cfg.lua"),'w')
+	domain = prosody_section['domain']
 	# create the lines 
-	line1 = "admins = {\"jitsi-videobridge." + prosody_section['domain'] + ",xrtc_sp00f_f0cus@auth." + prosody_section['domain'] +"\"}\n"
-	line2 = "s2s_secure auth = " + prosody_section['s2s'] + "\n"
-	if  prosody_section.get('s2s', None):
-		line3 = "ssl = {" + "\n\tkey = \"" + prosody_section['ssl_key'] + "\";\n\tcertificate = \"" + prosody_section['ssl_cert'] + "\";\n}\n"
+	line1 = "admins = {\"jitsi-videobridge." + domain + ",xrtc_sp00f_f0cus@auth." + domain +"\"}\n"
+	line2 = "s2s_secure_auth = " + prosody_section['s2s'] + "\n"
+	s2s = prosody_section.get('s2s', None)
+	if s2s and s2s == 'true':
+		line3 = "ssl = {" + "\n\tkey = \"" + nginx_section['ssl_key'] + "\";\n\tcertificate = \"" + nginx_section['ssl_cert'] + "\";\n}\n"
 	else:
 		line3 = "\n"
 	line4 = "token_authentication = \""+ prosody_section['token_authentication'] + "\"\n"
-	line5 = "VirtualHost \"" + prosody_section['domain'] + "\"\n\tauthentication = \"internal_plain\"\n"
-	line6 = "VirtualHost \"auth." + prosody_section['domain'] + "\"\n\tauthentication = \"internal_plain\"\n"
+	if domain != prosody_section['xmpp_fqdn']:
+		line5 = "VirtualHost \"" + domain + "\"\n\tauthentication = \"internal_plain\"\n"
+	else:
+		line5 = "\n"
+	
+	line6 = "VirtualHost \"auth." + domain + "\"\n\tauthentication = \"internal_plain\"\n"
 	line7 = "VirtualHost \"" + prosody_section['xmpp_fqdn'] + "\"\n\tauthentication = \"internal_plain\"\n" \
 					"\thttp_host = {\"localhost\",\"ip6-localhost\"}\n" \
 					"\tmodules_enabled = {\n\t\t" \
 					"\"bosh\";\n\t\t\"websocket\";\n\t\t\"pubsub\";\n\t\t\"s2s\";\n\t}\n"
 	line8 = "Component \"" + prosody_section['conference_fqdn'] + "\" \"muc\"\n\t" \
 					"modules_enabled = {\n\t\t\"mam_rest\";\n\t}\n\tstorage = {\n\t\tarchive2 = \"cassandra\"\n\t}\n\t" \
-					" cassandra = {host = \"" +  prosody_section['cassandra_db'] + "\"}\n"
-	line9 = "Component \"jitsi-videobridge." + prosody_section['domain'] + "\"\n\t component_secret = \"fO@OAfyH\"\n"
+					"cassandra = {host = \"" +  prosody_section['cassandra_db'] + "\"}\n"
+	line9 = "Component \"jitsi-videobridge." + domain + "\"\n\t component_secret = \"fO@OAfyH\"\n"
 	line10 = "Component \"" + prosody_section['focus_fqdn'] + "\"\n\t component_secret = \"Xtjn@I1#\"\n"
-
+	if prosody_section['jirecon_fqdn']:
+		line11 = "Component \"" + prosody_section['jirecon_fqdn'] + "\"\n\t component_secret = \"record\"\n"
+	else:
+		line11 = "\n"
 	
 	# write all the lines to the file
-	component_cfg_lua_file.write("%s\n%s\n%s\n%s\n%s\n" % (line1, line2, line3, line4, line5))
-	component_cfg_lua_file.write("%s\n%s\n%s\n%s\n%s\n" % (line6, line7, line8, line9, line10))
+	component_cfg_lua_file.write("%s%s%s%s%s" % (line1, line2, line3, line4, line5))
+	component_cfg_lua_file.write("%s%s%s%s%s%s" % (line6, line7, line8, line9, line10, line11))
 	
 	component_cfg_lua_file.close()
 	return True

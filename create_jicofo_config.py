@@ -15,7 +15,7 @@ import sys, os
 def create_jicofo_config(prosody_section, jicofo_section):
 	
 	print "config file path is %s" %jicofo_section['config_file_path']
-	jicofo_config_file = open(os.path.join(jicofo_section['config_file_path'], "jicofo_config"),'w')
+	jicofo_config_file = open(os.path.join(jicofo_section['config_file_path'], "config"),'w')
 	# create the lines 
 	line1 = "# Jitsi Conference Focus settings\n"
 	line2 = "JICOFO_HOST=localhost\n"
@@ -28,7 +28,7 @@ def create_jicofo_config(prosody_section, jicofo_section):
 		line7 = "JICOFO_SUBDOMAIN=" + subdomain + "\n"
 	else:
 		line7=""
-	line8 = "JICOFO_AUTH_USER=xrtc_sp00f_f0cus\nJICOFO_AUTH_PASSWORD=xrtc_sp00f_f0cus\nJICOFO_OPTS=\"\""
+	line8 = "JICOFO_AUTH_USER=xrtc_sp00f_f0cus\nJICOFO_AUTH_PASSWORD=xrtc_sp00f_f0cus\nJICOFO_OPTS=\"\"\n"
 	
 	# write all the lines to the file
 	jicofo_config_file.write("%s%s%s%s%s%s%s%s" % (line1, line2, line3, line4, line5, line6, line7, line8))
