@@ -1,9 +1,11 @@
 """
 	base_config_reader:
-		This file parses a config file containing configuration parameters
+		This file parses a config file containing base configuration parameters
+		needed to auto-generate config files for PROSODY, Jitsi Components (JICOFO,
+		VIDEOBRIDGE, JIRECON, JIGASI) and XMPP monitoring daemon
 
 	requires:
-		- Python 2.7+
+		- Python 2.6+
 		- Linux 2.6.x
 
 """
@@ -25,8 +27,14 @@ def validate_config_file_path(section):
 	return True
 	
 class BaseConfigReader(ConfigParser.ConfigParser):
+	"""
+		Reads the base config file pr
+	"""
 	# constructor
 	def __init__(self, conffile):
+		"""
+			constructor
+		"""
 		try: 
 			ConfigParser.ConfigParser.__init__(self)
 			self.read(conffile)

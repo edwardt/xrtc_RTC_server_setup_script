@@ -1,11 +1,11 @@
 #!/usr/bin/python
 """
 	create_jicofo_config:
-	This script creates the following configuration file that will be 
+	This script creates the configuration file that will be 
 	read  by JICOFO component, at startup
 
 	requires:
-		- Python 2.7+
+		- Python 2.6+
 		- Linux 2.6.x
 
 """
@@ -21,7 +21,7 @@ def create_jicofo_config(prosody_section, jicofo_section):
 	# create the lines 
 	line1 = "# Jitsi Conference Focus settings\n"
 	line2 = "JICOFO_HOST=localhost\n"
-	line3 = "JICOFO_HOSTNAME=" + prosody_section['domain'] + "\n"
+	line3 = "JICOFO_HOSTNAME=" + domain + "\n"
 	line4 = "JICOFO_SECRET=Xtjn@I1#\n"
 	line5 = "JICOFO_PORT=5347\n"
 	line6 = "JICOFO_AUTH_DOMAIN=auth." + domain + "\n"
@@ -30,8 +30,8 @@ def create_jicofo_config(prosody_section, jicofo_section):
 	register_string = "prosodyctl register " + subdomain + " auth." + domain + " Xtjn@I1#"
 	os.system(register_string)
 	
-	#determine if domain is IPv4 or IPv6 address.
-	#check if domain contains numbers and '.' only
+	# determine if domain is IPv4 or IPv6 address.
+	# check if domain contains numbers and '.' only
 	if re.match("^[\d.]*$", domain):
 		line7 = ""
 	else:
