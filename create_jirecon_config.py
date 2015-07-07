@@ -26,6 +26,7 @@ def create_jirecon_config(prosody_section, jirecon_section):
 	# write all the lines to the file
 	jirecon_config_file.write("%s%s%s%s%s" % (line1, line2, line3, line4, line5))
 	jirecon_config_file.close()
+	os.chmod(os.path.join(jirecon_section['config_file_path'], "config"), stat.S_IRWXU|stat.S_IRGRP|stat.S_IROTH)
 
 	# create and write to the properties file
 	jirecon_properties_file = open(os.path.join(jirecon_section['config_file_path'], "jirecon.properties"),'w')
@@ -44,6 +45,7 @@ def create_jirecon_config(prosody_section, jirecon_section):
 	jirecon_properties_file.write("%s%s%s%s%s" % (line1, line2, line3, line4, line5))
 	jirecon_properties_file.write("%s%s%s%s%s" % (line6, line7, line8, line9, line10))
 	jirecon_properties_file.close()
+	os.chmod(os.path.join(jirecon_section['config_file_path'], "jirecon.properties"), stat.S_IRWXU|stat.S_IRGRP|stat.S_IROTH)
 	return True
 		
 if __name__ == '__main__':

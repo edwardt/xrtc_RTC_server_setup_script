@@ -51,7 +51,7 @@ def create_prosody_config(prosody_section, nginx_section):
 	
 	# write all the lines to the file
 	component_cfg_lua_file.write("%s%s%s%s%s" % (line1, line2, line3, line4, line5))
-	component_cfg_lua_file.write("%s%s%s%s%s%s" % (line6, line7, line8, line9, line10))
+	component_cfg_lua_file.write("%s%s%s%s%s" % (line6, line7, line8, line9, line10))
 	
 	component_cfg_lua_file.close()
 	os.chmod(os.path.join(prosody_section['config_file_path'], "component.cfg.lua"), stat.S_IRWXU|stat.S_IRGRP|stat.S_IROTH)

@@ -42,6 +42,7 @@ def create_jicofo_config(prosody_section, jicofo_section):
 	jicofo_config_file.write("%s%s%s%s%s%s%s%s" % (line1, line2, line3, line4, line5, line6, line7, line8))
 	
 	jicofo_config_file.close()
+	os.chmod(os.path.join(jicofo_section['config_file_path'], "config"), stat.S_IRWXU|stat.S_IRGRP|stat.S_IROTH)
 	return True
 		
 if __name__ == '__main__':

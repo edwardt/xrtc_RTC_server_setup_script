@@ -28,7 +28,7 @@ def create_nginx_config(prosody_section, nginx_section):
 	line3 = "server_name " + xmpp_fqdn + ";\n\t"
 	line4 = "location ~ ^/([a-zA-Z0-9=\?]+)$ {\n\t\trewrite ^/(.*)$ / break;\n\t}\n\t"
 	line5 = "location /http-bind {\n\t\tproxy_pass http://localhost:5280/http-bind;\n\t\tproxy_set_header X-Forwarded-For $remote_addr;\n\t\tadd_header 'Access-Control-Allow-Origin' \"$http_origin\";\n\t}\n\t"
-	line6 = "# xmpp websockets"
+	line6 = "# xmpp websockets\n\t"
 	line7 = "location /xmpp-websocket {\n\t\tproxy_pass http://localhost:5280;\n\t\tproxy_set_header X-Forwarded-For $remote_addr;\n\t\tproxy_http_version 1.1;\n\t\tproxy_set_header Upgrade $http_upgrade;\n\t\tproxy_set_header Connection \"upgrade\";\n\t\ttcp_nodelay on;\n\t\tproxy_read_timeout 300s;\n\t}\n}\n"
 	
 	line8 = "server {\n\tlisten [::]:80;\n\t"
@@ -40,7 +40,7 @@ def create_nginx_config(prosody_section, nginx_section):
 	line10 = "server_name " + xmpp_fqdn + ";\n\t"
 	line11 = "location ~ ^/([a-zA-Z0-9=\?]+)$ {\n\t\trewrite ^/(.*)$ / break;\n\t}\n\t"
 	line12 = "location /http-bind {\n\t\tproxy_pass http://localhost:5280/http-bind;\n\t\tproxy_set_header X-Forwarded-For $remote_addr;\n\t\tadd_header 'Access-Control-Allow-Origin' \"$http_origin\";\n\t}\n\t"
-	line13 = "# xmpp websockets"
+	line13 = "# xmpp websockets\n\t"
 	line14 = "location /xmpp-websocket {\n\t\tproxy_pass http://localhost:5280;\n\t\tproxy_set_header X-Forwarded-For $remote_addr;\n\t\tproxy_http_version 1.1;\n\t\tproxy_set_header Upgrade $http_upgrade;\n\t\tproxy_set_header Connection \"upgrade\";\n\t\ttcp_nodelay on;\n\t\tproxy_read_timeout 300s;\n\t}\n}\n"
 	
 	# write all the lines to the file
@@ -49,6 +49,7 @@ def create_nginx_config(prosody_section, nginx_section):
 	nginx_config_file.write("%s%s%s%s" % (line11, line12, line13, line14))
 	
 	nginx_config_file.close()
+	os.chmod(os.path.join(nginx_section['config_file_path'], nginx_section.get('config_file_name')), stat.S_IRWXU|stat.S_IRGRP|stat.S_IROTH)
 	return True
 		
 if __name__ == '__main__':
