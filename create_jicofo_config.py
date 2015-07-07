@@ -10,7 +10,7 @@
 
 """
 
-import sys, os, re
+import sys, os, re, stat
 
 def create_jicofo_config(prosody_section, jicofo_section):
 	

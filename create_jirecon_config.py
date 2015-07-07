@@ -10,7 +10,7 @@
 
 """
 
-import sys, os
+import sys, os, stat
 
 def create_jirecon_config(prosody_section, jirecon_section):
 	

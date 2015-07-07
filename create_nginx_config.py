@@ -9,7 +9,7 @@
 
 """
 
-import sys, os
+import sys, os, stat
 
 def create_nginx_config(prosody_section, nginx_section):
 	
