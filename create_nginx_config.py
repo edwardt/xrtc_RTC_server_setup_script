@@ -23,10 +23,10 @@ def create_nginx_config(prosody_section, nginx_section):
 	ssl_cert = nginx_section.get('ssl_cert', None)
 	if os.path.isfile(ssl_key) and os.path.isfile(ssl_cert):
 		line2 = "listen 443 ssl;\n\t"
-		line3 = "ssl_certificate " + ssl_cert + ";"
-		line4 = "ssl_certificate_key " + ssl_key + ";"
+		line3 = "ssl_certificate " + ssl_cert + ";\n\t"
+		line4 = "ssl_certificate_key " + ssl_key + ";\n\t"
 	else:
-		line2 = "\n\t"
+		line2 = "\n"
 		line3 = "\n"
 		line4 = "\n"
 	line5 = "server_name " + xmpp_fqdn + ";\n\t"
