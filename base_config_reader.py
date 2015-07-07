@@ -132,6 +132,7 @@ class BaseConfigReader(ConfigParser.ConfigParser):
 	def validate_prosody_section(self):
 		"""
 			Verifies if
+			1. /etc/prosody/prosody.cfg.lua.default exists
 			1. prosody section in base config file exists
 			2. the keys - CONFIG_FILE_PATH, DOMAIN, CONFERENCE_FQDN, XMPP_FQDN,
 										FOCUS_FQDN, S2S and TOKEN_AUTHENTICATION have values
@@ -139,6 +140,9 @@ class BaseConfigReader(ConfigParser.ConfigParser):
 				 set for keys - SSL_KEY & SSL_CERT
 		"""
 		try:
+			if not os.path.isfile("/etc/prosody/prosody.cfg.lua") and not os.path.isfile("/etc/prosody/prosody.cfg.lua.default"):
+					print "/etc/prosody/prosody.cfg.lua does not exist. /etc/prosody/prosody.cfg.lua.default \"also\" does not exist. Please verify if prosody package has been installed correctly."
+					return False
 			prosody_section = self.d.get('PROSODY')
 			#PROSDY section exists
 			domain = self.validate_domain(prosody_section)

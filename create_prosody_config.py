@@ -10,10 +10,13 @@
 
 """
 
-import sys, os
+import sys, os, stat, shutil
 
 def create_prosody_config(prosody_section, nginx_section):
-	
+	if not os.path.isfile("/etc/prosody/prosody.cfg.lua"):
+		print "copying /etc/prosody/prosody.cfg.lua.default to /etc/prosody/prosody.cfg.lua"
+		shutil.copy("/etc/prosody/prosody.cfg.lua.default", "/etc/prosody/prosody.cfg.lua")
+		
 	print "config file path is %s" %prosody_section['config_file_path']
 	component_cfg_lua_file = open(os.path.join(prosody_section['config_file_path'], "component.cfg.lua"),'w')
 	domain = prosody_section['domain']
@@ -51,6 +54,7 @@ def create_prosody_config(prosody_section, nginx_section):
 	component_cfg_lua_file.write("%s%s%s%s%s%s" % (line6, line7, line8, line9, line10, line11))
 	
 	component_cfg_lua_file.close()
+	os.chmod(os.path.join(prosody_section['config_file_path'], "component.cfg.lua"), stat.S_IRWXU|stat.S_IRGRP|stat.S_IROTH)
 	return True
 		
 if __name__ == '__main__':

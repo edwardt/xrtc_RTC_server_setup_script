@@ -44,9 +44,9 @@ class CreateRtcConfigFiles:
 		jvb_section_status = self.bcr.validate_jvb_section()
 		if not jvb_section_status:
 			sys.exit("Invalid jvb section. exiting...")
-		jirecon_section_status = self.bcr.validate_jirecon_section()
-		if not jirecon_section_status:
-			sys.exit("Invalid jirecon section. exiting...")
+		#jirecon_section_status = self.bcr.validate_jirecon_section()
+		#if not jirecon_section_status:
+			#sys.exit("Invalid jirecon section. exiting...")
 			
 		# generate config files
 		nginx_config_status = create_nginx_config(self.d['PROSODY'], self.d['NGINX'])
@@ -61,9 +61,9 @@ class CreateRtcConfigFiles:
 		videobridge_config_status = create_videobridge_config(self.d['PROSODY'], self.d['JVB'])
 		if not videobridge_config_status:
 			sys.exit("videobridge config file not created. Exiting ...")
-		jirecon_config_status = create_jirecon_config(self.d['PROSODY'], self.d['JIRECON'])
-		if not jirecon_config_status:
-			sys.exit("jirecon config file not created. Exiting ...")
+		#jirecon_config_status = create_jirecon_config(self.d['PROSODY'], self.d['JIRECON'])
+		#if not jirecon_config_status:
+			#sys.exit("jirecon config file not created. Exiting ...")
 		
 if __name__ == '__main__':
 	try:
