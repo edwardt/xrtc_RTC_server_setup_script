@@ -44,10 +44,10 @@ def create_prosody_config(prosody_section, nginx_section):
 					"cassandra = {host = \"" +  prosody_section['cassandra_db'] + "\"}\n"
 	line9 = "Component \"jitsi-videobridge." + domain + "\"\n\t component_secret = \"fO@OAfyH\"\n"
 	line10 = "Component \"" + prosody_section['focus_fqdn'] + "\"\n\t component_secret = \"Xtjn@I1#\"\n"
-	if prosody_section['jirecon_fqdn']:
-		line11 = "Component \"" + prosody_section['jirecon_fqdn'] + "\"\n\t component_secret = \"record\"\n"
-	else:
-		line11 = "\n"
+	#if prosody_section['jirecon_fqdn']:
+		#line11 = "Component \"" + prosody_section['jirecon_fqdn'] + "\"\n\t component_secret = \"record\"\n"
+	#else:
+		#line11 = "\n"
 	
 	# write all the lines to the file
 	component_cfg_lua_file.write("%s%s%s%s%s" % (line1, line2, line3, line4, line5))
